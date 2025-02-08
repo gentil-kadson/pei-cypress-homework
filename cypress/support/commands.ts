@@ -30,6 +30,7 @@ declare global {
   namespace Cypress {
     interface Chainable {
       loginCoordinator(): Chainable<void>;
+      loginProfessor(): Chainable<void>;
     }
   }
 }
@@ -39,6 +40,15 @@ Cypress.on("uncaught:exception", () => false);
 Cypress.Commands.add("loginCoordinator", () => {
   cy.visit("/accounts/login/");
   cy.get("input[id='id_login']").type(Cypress.env("COORDINATOR_EMAIL"));
+  cy.get("input[id='id_password']").type(Cypress.env("PASSWORD"), {
+    log: false,
+  });
+  cy.get("button").contains("Entrar").click();
+});
+
+Cypress.Commands.add("loginProfessor", () => {
+  cy.visit("/accounts/login/");
+  cy.get("input[id='id_login']").type(Cypress.env("PROFESSOR_EMAIL"));
   cy.get("input[id='id_password']").type(Cypress.env("PASSWORD"), {
     log: false,
   });
